@@ -29,6 +29,6 @@ module.exports = (robot) ->
         robot.http("http://www.hearthhead.com/card=#{card_id}")
           .get() (err, res, body) ->
             $ = cheerio.load(body)
-            raw_script = $('#main-contents .text h1').next('script').html()
+            raw_script = $('#main-contents .text script').first().html()
             img_tag = raw_script.split('tooltip_premium_enus = \'')[1].split('<table>')[0]
             msg.send 'http:' + cheerio.load(img_tag)('img').attr('src')
