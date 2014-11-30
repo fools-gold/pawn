@@ -20,8 +20,11 @@ url = require('url')
 module.exports = (robot) ->
 
   robot.respond /dominion (.*)/, (msg) ->
-    card = msg.match[1]
-    robot.http("http://dominion.diehrstraits.com/?card=#{card}")
+    query = msg.match[1]
+    robot.http("http://dominion.diehrstraits.com/?card=#{query}")
       .get() (err, res, body) ->
         $ = cheerio.load(body)
-        msg.send url.resolve('http://dominion.diehrstraits.com', $('img.card_img').first().attr('src'))
+        card_name = $('img.card_img').first().attr('alt')
+        image_url = url.resolve('http://dominion.diehrstraits.com', $('img.card_img').first().attr('src'))
+        msg.send image_url
+        msg.send image_url if card_name is 'Rats'
