@@ -23,8 +23,6 @@ module.exports = (robot) ->
   robot.respond /hearth(stone)? (golden(?= ))?(.*)/, (msg) ->
     golden = msg.match[2]
     card = msg.match[3]
-    console.log(2, golden)
-    console.log(3, card)
     robot.http("http://www.hearthhead.com/cards?filter=na=#{card}")
       .get() (err, res, body) ->
         $ = cheerio.load(body)
