@@ -3,7 +3,6 @@
 #
 # Dependencies:
 #   "cheerio"
-#   "url"
 #
 # Configuration:
 #   None
@@ -16,7 +15,6 @@
 #   woongy
 
 cheerio = require('cheerio')
-url = require('url')
 
 module.exports = (robot) ->
 
