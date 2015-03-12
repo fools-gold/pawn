@@ -34,5 +34,5 @@ images = [
 
 module.exports = (robot) ->
 
-  robot.hear /질러/i, (msg) ->
+  robot.hear /(질러|지르자)/i, (msg) ->
     msg.send msg.random images
