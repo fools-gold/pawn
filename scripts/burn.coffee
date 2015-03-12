@@ -1,5 +1,5 @@
 # Description
-#   Display a semi-random image to encourage buying
+#   지름을 독촉하는 짤 소환
 #
 # Dependencies:
 #   None
@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot burn - Get image
+#   질러 - 지름 짤 소환
 #
 # Author:
 #   hwidong
@@ -34,5 +34,5 @@ images = [
 
 module.exports = (robot) ->
 
-  robot.hear /burn/i, (msg) ->
+  robot.hear /질러/i, (msg) ->
     msg.send msg.random images
