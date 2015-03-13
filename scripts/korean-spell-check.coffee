@@ -1,5 +1,5 @@
 # Description
-#   Display a summary of a board game from BoardGameGeek
+#   한국어 맞춤법 교정
 #
 # Dependencies:
 #   "cheerio"
