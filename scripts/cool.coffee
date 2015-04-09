@@ -31,9 +31,13 @@ module.exports = (robot) ->
               robot.http(href)
                 .get() (err, res, body) ->
                   $ = cheerio.load(body)
-                  title = $('.contentsTit').text().split('[판매]')[1].trim()
-                  time = $('.subinfo').text()
-                  contents_arr = $("#writeContents div").filter(function() {return $( "strike", this ).length === 0 && $(this).children().length > 0})
-                  contents = ""
-                  contents_arr.each(function(){contents += $(this).text() + "\n"})
-                  msg.send "#{title} [${time}]\n${contents}"
+                  # title = $('.contentsTit').text().split('[판매]')[1].trim()
+                  title = $('.contentsTit').text()
+                  time = $('.subInfo').text().trim()
+                  # contents_arr = $("#writeContents div:not(:has('strike'))")
+                  # contents = ""
+                  # for content in contents_arr
+                  #   do (content) ->
+                  #     contents += $(content).text() + "\n"
+                  contents = $("#writeContents").text()
+                  msg.send "#{title} [#{time}]\n#{contents}"
