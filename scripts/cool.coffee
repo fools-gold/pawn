@@ -30,8 +30,9 @@ module.exports = (robot) ->
   robot.respond /cool start/i, (msg) ->
     if not init
       init = true
+      last_article_checked = 0
       setTimer interval, msg
-      msg.send "쿨매 알림 시작! 5분에 한 번씩 작동합니다."
+      msg.send "쿨매 알림 시작! #{interval}분에 한 번씩 작동합니다."
     else
       msg.send "쿨매 알림이 이미 작동중입니다."
 
@@ -83,7 +84,7 @@ module.exports = (robot) ->
                     contents = $("#writeContents")[0]
                     $(contents).find("strike").parent().remove()
                     contents = $(contents).text().trim()
-                    msg.send "#{title} [#{href}]\n#{contents}"
+                    msg.send "#{title} [#{href}]\n#{contents}\n===================="
         if articles.length > 0
           last_article_checked = articles.sort().reverse()[0]
         cb null
