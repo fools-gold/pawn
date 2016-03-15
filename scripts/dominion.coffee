@@ -24,7 +24,8 @@ module.exports = (robot) ->
     robot.http("http://dominion.diehrstraits.com/?card=#{query}")
       .get() (err, res, body) ->
         $ = cheerio.load(body)
-        card_name = $('img.card_img').first().attr('alt')
-        image_url = url.resolve('http://dominion.diehrstraits.com', $('img.card_img').first().attr('src'))
+        image = $('img.card-img').first()
+        card_name = image.attr('alt')
+        image_url = url.resolve('http://dominion.diehrstraits.com', image.attr('src'))
         msg.send image_url
         msg.send image_url if card_name is 'Rats'
