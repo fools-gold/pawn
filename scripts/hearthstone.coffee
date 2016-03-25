@@ -25,7 +25,7 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         $ = cheerio.load(body)
         raw_script = $('#lv-hearthstonecards').next('script').html()
-        card_id = raw_script.split('hearthstoneCards = [{"id":')[1].split(',')[0]
+        card_id = raw_script.split('hearthstoneCards = [{"id":')[1].split(',')[0].replace(/"/g,"")
         robot.http("http://www.hearthhead.com/card=#{card_id}")
           .get() (err, res, body) ->
             $ = cheerio.load(body)
