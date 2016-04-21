@@ -21,7 +21,7 @@ module.exports = (robot) ->
 
   robot.respond /netrunner (.*)/, (msg) ->
     query = msg.match[1]
-    robot.http("http://netrunnerdb.com/find/?q=#{query}")
+    robot.http("https://netrunnerdb.com/find/?q=#{query}")
       .get() (err, res, body) ->
         $ = cheerio.load(body)
         image_path = $('.card-image img').first().attr('src')
