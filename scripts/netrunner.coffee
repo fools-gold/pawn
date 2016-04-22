@@ -27,7 +27,7 @@ module.exports = (robot) ->
         image_path = $('.card-image img').first().attr('src')
         if image_path?
           title = $('h3.card-title a.card-title').first()
-          robot.adapter.customMessage
+          robot.emit 'slack.attachment',
             message: msg,
             attachments: [{
               title: title.text(),
