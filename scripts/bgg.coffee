@@ -25,12 +25,9 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         $ = cheerio.load(body)
         title_url = url.resolve('https://boardgamegeek.com', $('#results_objectname1 > a').attr('href'))
-        robot.http(title_url)
-          .get() (err, res, body) ->
-            $ = cheerio.load(body)
-            title = $('span[property~="v:itemreviewed"]').text()
-            year = $('h1.geekitem_title > span.mf').text()
-            rating = $('span[property~="v:average"]').text()
-            stars = Array(Math.round(parseFloat(rating)) + 1).join(':star:')
-            msg.send "#{title} #{year} #{stars} #{rating}"
-            msg.send title_url
+        title = $('#results_objectname1 > a').text()
+        year = $('#results_objectname1 > span').text()
+        rating = $('#CEcell_objectname1 ~ .collection_bggrating').eq(1).text().trim()
+        stars = Array(Math.round(parseFloat(rating)) + 1).join(':star:')
+        msg.send "#{title} #{year} #{stars} #{rating}"
+        msg.send title_url
