@@ -27,10 +27,11 @@ module.exports = (robot) ->
         image_path = $('.card-image img').first().attr('src')
         if image_path?
           title = $('h3.card-title a.card-title').first()
+          set = $('ul.pager li:nth-child(2) a').first()
           robot.emit 'slack.attachment',
             message: msg,
             attachments: [{
-              title: title.text(),
+              title: "#{title.text()} (#{set.text()})",
               text: title.attr('href'),
               image_url: url.resolve('https://netrunnerdb.com', image_path)
             }]
