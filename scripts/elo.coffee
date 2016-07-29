@@ -37,8 +37,8 @@ module.exports = (robot) ->
     ).join("\n")
 
   robot.respond /elo (.*) (beat|won|defeated) (.*)/, (msg) ->
-    p1 = msg.match[1]
-    p2 = msg.match[3]
+    p1 = msg.match[1].trim()
+    p2 = msg.match[3].trim()
 
     r1 = (robot.brain.data.elo[p1] ||= { wins: 0, losses: 0, draws: 0, rating: 1000 }).rating
     r2 = (robot.brain.data.elo[p2] ||= { wins: 0, losses: 0, draws: 0, rating: 1000 }).rating
@@ -52,8 +52,8 @@ module.exports = (robot) ->
     msg.send "#{p2}: #{Math.round(r2)} -> #{Math.round(robot.brain.data.elo[p2].rating)}"
 
   robot.respond /elo (.*) drew with (.*)/, (msg) ->
-    p1 = msg.match[1]
-    p2 = msg.match[2]
+    p1 = msg.match[1].trim()
+    p2 = msg.match[2].trim()
 
     r1 = (robot.brain.data.elo[p1] ||= { wins: 0, losses: 0, draws: 0, rating: 1000 }).rating
     r2 = (robot.brain.data.elo[p2] ||= { wins: 0, losses: 0, draws: 0, rating: 1000 }).rating
