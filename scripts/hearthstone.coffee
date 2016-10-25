@@ -18,22 +18,15 @@ cheerio = require('cheerio')
 
 module.exports = (robot) ->
 
-  robot.respond /hearth(stone)? (golden(?= ))?(.*)/, (msg) ->
+  robot.respond /hearth(stone)? (golden )?(.*)/, (msg) ->
     golden = msg.match[2]
     card = msg.match[3]
-    robot.http("http://www.hearthhead.com/cards?filter=na=#{card}")
+    robot.http("http://hearthstone.services.zam.com/v1/card?search=#{card}")
       .get() (err, res, body) ->
-        $ = cheerio.load(body)
-        raw_script = $('#lv-hearthstonecards').next('script').html()
-        card_id = raw_script.split('hearthstoneCards = [{"id":')[1].split(',')[0].replace(/"/g,"")
-        robot.http("http://www.hearthhead.com/card=#{card_id}")
-          .get() (err, res, body) ->
-            $ = cheerio.load(body)
-            raw_script = $('#main-contents .text script').first().html()
-            if golden?
-              img_tag = raw_script.split('tooltip_premium_enus = \'')[1].split('<table>')[0]
-              msg.send 'http:' + cheerio.load(img_tag)('img').attr('src')
-            else
-              img_tag = raw_script.split('tooltip_enus = \'')[1].split('<table>')[0]
-              msg.send 'http:' + cheerio.load(img_tag)('img').attr('src')
-
+        media = JSON.parse(body)[0].media
+        if golden?
+          url = media.find((obj) -> obj.type == 'GOLDEN_CARD_IMAGE').url
+          msg.send "http://media.services.zam.com/v1/media/byName#{url}"
+        else
+          url = media.find((obj) -> obj.type == 'CARD_IMAGE').url
+          msg.send "http://media.services.zam.com/v1/media/byName#{url}"
