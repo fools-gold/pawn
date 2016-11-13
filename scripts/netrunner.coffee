@@ -42,9 +42,14 @@ module.exports = (robot) ->
         if image_path?
           title = $('h3.card-title a.card-title').first()
           set = $('ul.pager li:nth-child(2) a').first()
-          prop = $('span.card-prop').first()
-          influence = Array(parseInt(prop.text().match(/Influence: (\d)/)[1]) + 1).join('•');
-          faction = $('.card-illustrator small').first().text().match(/^\s+\b(.+) •/)[1];
+          faction = $('.card-illustrator small').first().text().match(/^\s+\b(.+) •/)[1]
+
+          type = $('span.card-type').first().text()
+          if type == 'Agenda' || type == 'Identity'
+            influence = '';
+          else
+            prop = $('span.card-prop').first()
+            influence = Array(parseInt(prop.text().match(/Influence: (\d)/)[1]) + 1).join('•')
 
           robot.emit 'slack.attachment',
             message: msg,
